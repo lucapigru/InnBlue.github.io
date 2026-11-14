@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CozyStay — La tua casa lontano da casa</title>
+  <meta name="description" content="Un appartamento confortevole e completamente attrezzato. Contattaci per prenotare il tuo soggiorno." />
+
+  <style>
+    /* ---------- Base ---------- */
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --primary: #ff5a5f;         /* rosso stile Airbnb */
+      --dark: #222222;
+      --gray: #717171;
+      --light: #f7f7f7;
+      --radius: 12px;
+      --max-width: 1100px;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+      background: #fff;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    section { padding: 70px 20px; }
+    .container { max-width: var(--max-width); margin: 0 auto; }
+    h1, h2, h3 { line-height: 1.2; }
+    h2 { font-size: 2rem; margin-bottom: 1rem; }
+    .muted { color: var(--gray); }
+
+    /* ---------- Navbar ---------- */
+    header {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid #eee;
+    }
+    .nav {
+      max-width: var(--max-width); margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 20px;
+    }
+    .logo { font-weight: 700; font-size: 1.2rem; }
+    .logo span { color: var(--primary); }
+    .nav a.cta {
+      background: var(--primary); color: #fff;
+      padding: 10px 18px; border-radius: 999px; font-weight: 600;
+      transition: transform .2s, opacity .2s;
+    }
+    .nav a.cta:hover { transform: translateY(-1px); opacity: .9; }
+
+    /* ---------- Hero ---------- */
+    .hero {
+      position: relative;
+      min-height: 78vh;
+      display: flex; align-items: center;
+      background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.45)),
+                  url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      color: #fff;
+      text-align: center;
+    }
+    .hero-content { max-width: 800px; margin: 0 auto; padding: 40px 20px; }
+    .hero h1 { font-size: clamp(2rem, 5vw, 3.4rem); margin-bottom: 1rem; }
+    .hero p { font-size: 1.15rem; opacity: .95; margin-bottom: 2rem; }
+    .hero .cta-group { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn {
+      display: inline-block; padding: 14px 26px; border-radius: 999px;
+      font-weight: 600; transition: transform .2s, opacity .2s;
+    }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { transform: translateY(-2px); opacity: .92; }
+    .btn-outline { border: 2px solid #fff; color: #fff; }
+    .btn-outline:hover { background: #fff; color: var(--dark); }
+
+    /* ---------- Gallery ---------- */
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+    }
+    .gallery img {
+      width: 100%; height: 220px; object-fit: cover;
+      border-radius: var(--radius);
+      transition: transform .3s;
+    }
+    .gallery img:hover { transform: scale(1.02); }
+
+    /* ---------- Features ---------- */
+    .features {
+      background: var(--light);
+    }
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 30px;
+    }
+    .feature {
+      background: #fff; padding: 24px; border-radius: var(--radius);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+    .feature h3 { font-size: 1.1rem; margin-bottom: .4rem; }
+    .feature .icon { font-size: 1.8rem; margin-bottom: .6rem; }
+
+    /* ---------- About / Description ---------- */
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;
+    }
+    .about-grid img { border-radius: var(--radius); height: 100%; object-fit: cover; }
+    @media (max-width: 720px) { .about-grid { grid-template-columns: 1fr; } }
+
+    /* ---------- Contact ---------- */
+    .contact { background: var(--dark); color: #fff; text-align: center; }
+    .contact h2 { color: #fff; }
+    .contact p { color: #ccc; max-width: 600px; margin: 0 auto 2rem; }
+    .phone-btn {
+      display: inline-flex; align-items: center; gap: 12px;
+      background: var(--primary); color: #fff;
+      padding: 18px 32px; border-radius: 999px;
+      font-size: 1.2rem; font-weight: 700;
+      transition: transform .2s, opacity .2s;
+    }
+    .phone-btn:hover { transform: translateY(-2px); opacity: .92; }
+    .phone-note { margin-top: 1.2rem; font-size: .9rem; color: #aaa; }
+
+    /* ---------- Footer ---------- */
+    footer {
+      background: #111; color: #888; text-align: center;
+      padding: 24px 20px; font-size: .85rem;
+    }
+
+    /* ---------- Reveal animation ---------- */
+    .reveal { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <header>
+    <nav class="nav">
+      <div class="logo">Cozy<span>Stay</span></div>
+      <a href="#contatti" class="cta">Prenota ora</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>La tua casa lontano da casa</h1>
+      <p>Un appartamento confortevole e completamente attrezzato nel cuore della città — perfetto per soggiorni brevi o lunghi.</p>
+      <div class="cta-group">
+        <a href="#galleria" class="btn btn-primary">Guarda le foto</a>
+        <a href="#contatti" class="btn btn-outline">Chiama per prenotare</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERIA -->
+  <section id="galleria">
+    <div class="container reveal">
+      <h2>Dai un'occhiata all'interno</h2>
+      <p class="muted" style="margin-bottom:24px;">Alcune foto dello spazio in cui soggiornerai.</p>
+      <div class="gallery">
+        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?auto=format&fit=crop&w=800&q=80" alt="Soggiorno" />
+        <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80" alt="Camera da letto" />
+        <img src="https://images.unsplash.com/photo-1556912173-3bb406ef7e77?auto=format&fit=crop&w=800&q=80" alt="Cucina" />
+        <img src="https://images.unsplash.com/photo-1584622650111-993a426fbf0a?auto=format&fit=crop&w=800&q=80" alt="Bagno" />
+        <img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?auto=format&fit=crop&w=800&q=80" alt="Vista dal balcone" />
+        <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80" alt="Zona pranzo" />
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVIZI -->
+  <section class="features">
+    <div class="container reveal">
+      <h2>Cosa è incluso</h2>
+      <p class="muted">Tutto ciò che serve per un soggiorno confortevole.</p>
+      <div class="feature-grid">
+        <div class="feature">
+          <div class="icon">📶</div>
+          <h3>Wi-Fi veloce</h3>
+          <p class="muted">Internet gratuito ad alta velocità in tutto l'appartamento.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🛏️</div>
+          <h3>Letti confortevoli</h3>
+          <p class="muted">Biancheria fresca e asciugamani forniti per ogni ospite.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🍳</div>
+          <h3>Cucina completa</h3>
+          <p class="muted">Cucina i tuoi pasti con tutti gli utensili essenziali inclusi.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🚗</div>
+          <h3>Parcheggio gratuito</h3>
+          <p class="muted">Posto auto privato proprio accanto all'edificio.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🌇</div>
+          <h3>Ottima posizione</h3>
+          <p class="muted">A pochi passi da negozi, ristoranti e mezzi pubblici.</p>
+        </div>
+        <div class="feature">
+          <div class="icon">🧺</div>
+          <h3>Lavatrice e asciugatrice</h3>
+          <p class="muted">Lavanderia in appartamento per viaggiare leggeri.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DESCRIZIONE -->
+  <section>
+    <div class="container reveal">
+      <div class="about-grid">
+        <div>
+          <h2>Lo spazio</h2>
+          <p class="muted" style="margin-bottom:1rem;">
+            Questo appartamento luminoso e accogliente è perfetto per coppie, piccole famiglie o viaggiatori d'affari.
+            Dispone di un'ampia zona giorno, una cucina completamente attrezzata, una camera da letto confortevole
+            e un bagno moderno.
+          </p>
+          <p class="muted">
+            Situato in un quartiere tranquillo con facile accesso ai mezzi pubblici, è la base ideale
+            per esplorare la zona. Mi occupo personalmente di ogni ospite — sarai accolto di persona
+            e potrai contattarmi direttamente per telefono durante il tuo soggiorno.
+          </p>
+        </div>
+        <img src="https://images.unsplash.com/photo-1560185007-cde436f6a4d0?auto=format&fit=crop&w=900&q=80" alt="Interno dell'appartamento" />
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATTI -->
+  <section class="contact" id="contatti">
+    <div class="container reveal">
+      <h2>Interessato? Chiamami</h2>
+      <p>
+        La prenotazione è gestita personalmente — chiamami o mandami un messaggio e organizzeremo tutto.
+        Nessun modulo online, nessun pagamento su questo sito.
+      </p>
+      <a href="tel:+391234567890" class="phone-btn">
+        📞 +39 123 456 7890
+      </a>
+      <p class="phone-note">Disponibile tutti i giorni, 9:00 – 21:00</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; <span id="year"></span> CozyStay — Tutti i diritti riservati.
+  </footer>
+
+  <script>
+    // Aggiorna automaticamente l'anno
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Animazione di comparsa allo scroll
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => io.observe(el));
+  </script>
+
+</body>
+</html>
